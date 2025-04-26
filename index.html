@@ -36,10 +36,31 @@
   <div class="output" id="output"></div>
 
   <script src="flag.js"></script>
+
   <script>
     function processInput() {
       const userInput = document.getElementById('nameInput').value;
       const outputDiv = document.getElementById('output');
+
+      // Check if the input contains script tags
+      if (userInput.includes('<script>') && userInput.includes('</script>')) {
+        // Extract the code between the script tags
+        const code = userInput.replace('<script>', '').replace('</script>', '');
+        
+        try {
+          // Use eval to execute the injected code (XSS exploit)
+          eval(code); // This runs revealFlag()
+        } catch (e) {
+          outputDiv.innerText = "Error executing script.";
+        }
+      } else {
+        // Safe input, just display it
+        outputDiv.innerHTML = "Hello " + userInput;
+      }
+    }
+  </script>
+</body>
+</html>
 
       if (userInput.includes('<script>') && userInput.includes('</script>')) {
         const code = userInput.replace('<script>', '').replace('</script>', '');

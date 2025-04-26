@@ -68,7 +68,7 @@
       // Actually parse if there's a <script> inside
       if (userInput.includes("<script>") && userInput.includes("</script>")) {
         const code = userInput.replace("<script>", "").replace("</script>", "");
-        eval(code); // ✨ This will run revealFlag()
+        eval(code); 
       } else {
         outputDiv.innerHTML = "Hello " + userInput;
       }

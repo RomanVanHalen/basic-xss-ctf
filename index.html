@@ -1,66 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Basic Reflected XSS Challenge</title>
+  <title>Challenge 01 - Reflected XSS</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
       background-color: #001f3f;
       color: white;
-      font-family: monospace;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
       flex-direction: column;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
     }
     input, button {
-      margin: 10px;
       padding: 10px;
+      margin: 10px;
+      font-size: 1rem;
       border-radius: 5px;
-      border: none;
-      font-size: 16px;
+      border: 1px solid #ccc;
+      outline: none;
     }
-    .output {
+    input {
+      width: 250px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    p {
+      font-size: 1.2rem;
       margin-top: 20px;
-      font-size: 20px;
-    }
-    .flag {
-      display: none;
     }
   </style>
 </head>
 <body>
   <h1>Reflected XSS</h1>
-  <p>Enter your name:</p>
-  <input type="text" id="nameInput" placeholder="Enter your name">
-  <button onclick="processInput()">Submit</button>
-
-  <div class="output" id="output"></div>
-  <div class="flag" id="hiddenFlag">flag{basic_xss_successful}</div>
+  <form action="" method="GET">
+    <input type="text" name="name" placeholder="Enter your name">
+    <button type="submit">Submit</button>
+  </form>
+  <p>Hello, <span id="output"></span></p>
 
   <script>
-    function processInput() {
-      const userInput = document.getElementById('nameInput').value;
-      const outputDiv = document.getElementById('output');
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name");
 
-      if (userInput.includes('<script>') && userInput.includes('</script>')) {
-        const code = userInput.replace('<script>', '').replace('</script>', '');
-        
-        try {
-          eval(code);
-        } catch (e) {
-          outputDiv.innerText = "Error executing script.";
-        }
-      } else {
-        outputDiv.innerHTML = "Hello " + userInput;
+    if (name) {
+      document.getElementById("output").innerHTML = name;
+
+      // Check if the reflected name contains the XSS payload
+      if (name.includes("<script>") || name.includes("<img")) {
+        var flag = "FLAG{d1a6b345-1234-5678-abcd-9876xyz}";
+        alert("Flag: " + flag);
       }
-    }
-
-    function revealFlag() {
-      const hiddenFlag = document.getElementById('hiddenFlag');
-      hiddenFlag.style.display = 'block';
-      alert("Flag Revealed: " + hiddenFlag.innerText);
     }
   </script>
 </body>

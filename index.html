@@ -25,6 +25,9 @@
       margin-top: 20px;
       font-size: 20px;
     }
+    .flag {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -35,7 +38,8 @@
 
   <div class="output" id="output"></div>
 
-  <script src="flag.js"></script>
+  <!-- Hidden flag inside HTML -->
+  <div class="flag" id="hiddenFlag">flag{basic_xss_successful}</div>
 
   <script>
     function processInput() {
@@ -58,20 +62,12 @@
         outputDiv.innerHTML = "Hello " + userInput;
       }
     }
-  </script>
-</body>
-</html>
 
-      if (userInput.includes('<script>') && userInput.includes('</script>')) {
-        const code = userInput.replace('<script>', '').replace('</script>', '');
-        try {
-          eval(code); // THIS will run revealFlag()
-        } catch (e) {
-          outputDiv.innerText = "Error executing script.";
-        }
-      } else {
-        outputDiv.innerHTML = "Hello " + userInput;
-      }
+    function revealFlag() {
+      // Make the hidden flag visible when the XSS is successful
+      const hiddenFlag = document.getElementById('hiddenFlag');
+      hiddenFlag.style.display = 'block';
+      alert("Flag Revealed: " + hiddenFlag.innerText);
     }
   </script>
 </body>

@@ -1,5 +1,3 @@
-const flag = "FLAG{cgtt76uytts}";
-
 function revealFlag() {
-  alert("Flag: " + flag);
+  alert("FLAG{cgyyuy78ui}");
 }

@@ -60,7 +60,15 @@
   <script>
     function greet() {
       const userInput = document.getElementById('input').value;
-      document.getElementById('output').innerHTML = `Hello ${userInput}`;
+      
+      // Create a new script tag with user input
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = "Hello ";
+
+      // Use a real DOM element for script execution
+      const span = document.createElement('span');
+      span.innerHTML = userInput;
+      outputDiv.appendChild(span);
     }
   </script>
 

@@ -37,8 +37,6 @@
   <button onclick="processInput()">Submit</button>
 
   <div class="output" id="output"></div>
-
-  <!-- Hidden flag inside HTML -->
   <div class="flag" id="hiddenFlag">flag{basic_xss_successful}</div>
 
   <script>
@@ -46,25 +44,20 @@
       const userInput = document.getElementById('nameInput').value;
       const outputDiv = document.getElementById('output');
 
-      // Check if the input contains script tags
       if (userInput.includes('<script>') && userInput.includes('</script>')) {
-        // Extract the code between the script tags
         const code = userInput.replace('<script>', '').replace('</script>', '');
         
         try {
-          // Use eval to execute the injected code (XSS exploit)
-          eval(code); // This runs revealFlag()
+          eval(code);
         } catch (e) {
           outputDiv.innerText = "Error executing script.";
         }
       } else {
-        // Safe input, just display it
         outputDiv.innerHTML = "Hello " + userInput;
       }
     }
 
     function revealFlag() {
-      // Make the hidden flag visible when the XSS is successful
       const hiddenFlag = document.getElementById('hiddenFlag');
       hiddenFlag.style.display = 'block';
       alert("Flag Revealed: " + hiddenFlag.innerText);
